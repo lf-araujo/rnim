@@ -1,0 +1,13 @@
+Package: rnim
+Type: Package
+Title: Simple package that allows you to load a library written in Nim
+Version: 0.1.0
+Author: Luis Castro-de-Araujo
+Maintainer: Luis Castro-de-Araujo <ldearaujo@unimelb.edu.au>
+Description: Very simple! You can write your memory and processing demanding tasks in Nim, 
+    then add the .nim files in the same folders as your calling source R file and it will 
+    compile and load the library into R memory. Depends on nim, nimble and rnim installed in
+    your system.
+License: MIT
+Encoding: UTF-8
+LazyData: true
