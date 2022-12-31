@@ -22,7 +22,7 @@ You will need first:
 ```r
 install.packages("devtools")
 library("devtools")
-install_github("tbates/umx")
+install_github("lf-araujo/rnim")
 library("umx")
 ```
 
