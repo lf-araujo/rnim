@@ -26,11 +26,11 @@ loadNim <- function(name, path) {
     message("You havent installed Nim! Please follow installation instructions from https://nim-lang.org/")
     stop()
   }
-  rnim.installed <- invisible(system(paste0(path,"nimble list -i | grep 'rnim'")))==0
-  if (!rnim.installed){
-    message("You don't have rnim installed, please run nimble install rnim")
-    stop()
-  }
+  # rnim.installed <- invisible(system(paste0(path,"nimble list -i | grep 'rnim'")))==0
+  # if (!rnim.installed){
+  #   message("You don't have rnim installed, please run nimble install rnim")
+  #   stop()
+  # }
   system(paste0(path,"nim c --app:lib ", name))
   dyn.load(paste0("lib",name,".so"))
 }
