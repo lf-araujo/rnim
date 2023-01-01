@@ -20,10 +20,9 @@ You will need first:
 
 
 ```r
-install.packages("devtools")
-library("devtools")
-install_github("lf-araujo/rnim")
-library("umx")
+#install.packages("devtools")
+devtools::install_github("lf-araujo/rnim")
+library("rnim")
 ```
 
 # Use
@@ -37,7 +36,7 @@ be available in R memory!
 But you can for example place the following `tNimFromR.nim` file:
 
 ```nim
-import ../src/rnim
+import rnim
 import std / [sequtils, unittest]
 
 #[
@@ -171,8 +170,9 @@ proc R_unload_tNimFromR*(info: ptr DllInfo) {.exportc: "R_unload_tNimFromR", cde
 Then load it from an R file using `loadNim()`:
 
 ```r
-
+library(rnim)
 loadNim("tNimFromR")
+
 
 addXYInt <- function(x, y) {
       return(.Call("addXYInt", x, y))
