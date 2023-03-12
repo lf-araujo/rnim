@@ -30,4 +30,5 @@ loadNim <- function(name, path) {
   if (Sys.getenv("LD_LIBRARY_PATH")=="") Sys.setenv(LD_LIBRARY_PATH = file.path(R.home()))
   system(paste0(path, "nim c --app:lib ", name))
   dyn.load(paste0("lib", name, ".so"))
+  source(paste0(name,'.R'))
 }

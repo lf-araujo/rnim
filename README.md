@@ -1,10 +1,8 @@
 # rnim
 
-I have been facing problems with R's memory management profile and will soon need to decouple the most computation intensive parts to other more efficient languages. But I refuse learning cpp and Nim comes as an excellent alternative! This is a complement to the [nim](https://nim-lang.org/) [rnim](https://github.com/SciNim/rnim) package, so to simplify and automate a few steps (like the compiling).
+I have been facing problems with R's memory management profile and will soon need to decouple the most computation intensive parts to other more efficient languages. Nim comes as an excellent alternative to cpp, for scientific purposes, as we don't always have access to programmers in academia. This is a complement to the [nim](https://nim-lang.org/) [rnim](https://github.com/SciNim/rnim) package, so to simplify and automate a few steps (like the compiling).
 
-This is right now a simple function to load a Nim library into R memory.
-
-WARNING: alpha quality software, if at all working. Use at your own risk!
+I am considering this currently in beta and the only step that is not implemented is managing Nim installation when not found in system. 
 
 
 # Installation instructions
@@ -27,13 +25,13 @@ library("rnim")
 
 # Use
 
-It is a simple function at the moment. You just create a nim file containing the functions that will perform any of your heavy computations,
-then you declare functions in R using the .Call() syntax as explained in [rnim](https://github.com/SciNim/rnim) and the objects created will
-be available in R memory!
+It is a simple function at the moment. You just create a Nim file containing the functions that will perform any of your heavy computations, then just call the file using the loadNim("libraryName") function and the speed of C will become available to you in the R environment.
+
+Some header declarations will be created in the loadNim step, these are .R files with the same name as the library.
 
 # No test units as this is the first commit
 
-But you can for example place the following `tNimFromR.nim` file:
+But you can for example place the following in a `tNimFromR.nim` file:
 
 ```nim
 import rnim
@@ -172,56 +170,6 @@ Then load it from an R file using `loadNim()`:
 ```r
 library(rnim)
 loadNim("tNimFromR")
-
-
-addXYInt <- function(x, y) {
-      return(.Call("addXYInt", x, y))
-
-}
-
-
-addXYFloat <- function(x, y) {
-      return(.Call("addXYFloat", x, y))
-
-}
-
-
-addVecs <- function(x, y) {
-      return(.Call("addVecs", x, y))
-
-}
-
-
-printVec <- function(v) {
-      invisible(.Call("printVec", v))
-
-}
-
-
-modifyVec <- function(v) {
-      invisible(.Call("modifyVec", v))
-
-}
-
-
-checkSexp <- function(s) {
-      invisible(.Call("checkSexp", s))
-
-}
-
-
-checkSexpRaw <- function(s) {
-      invisible(.Call("checkSexpRaw", s))
-
-}
-
-
-
-check <- function(arg) {
-    if (!all(arg)){
-        stop(paste("Failed to run ", deparse(arg)))
-    }
-}
 
 
 check(addXYInt(1L, 1L) == 1L + 1L)
