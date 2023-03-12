@@ -29,9 +29,9 @@ It is a simple function at the moment. You just create a Nim file containing the
 
 Some header declarations will be created in the loadNim step, these are .R files with the same name as the library.
 
-# No test units as this is the first commit
+# Example
 
-But you can for example place the following in a `tNimFromR.nim` file:
+Place the following in a `tNimFromR.nim` file:
 
 ```nim
 import rnim
@@ -131,37 +131,6 @@ proc checkSexpRaw*(s: SEXP) {.exportR.} =
     checkType[float](s)
     checkType[cdouble](s)
 
-
-#[
-I think the below is only relevant for complicated modules
-let callMethods* = [
-  R_CallMethodDef(name: "addXY".cstring,
-                  fun: cast[DL_FUNC](addXY),
-                  numArgs: 2.cint),
-  R_CallMethodDef(name: nil, fun: nil, numArgs: 0)
-]
-
-proc updateStackBottom() {.inline.} =
-  when not defined(gcDestructors):
-    var a {.volatile.}: int
-    nimGC_setStackBottom(cast[pointer](cast[uint](addr a)))
-    when compileOption("threads") and not compileOption("tlsEmulation"):
-      if not gcInited:
-        gcInited = true
-        setupForeignThreadGC()
-
-proc R_init_tNimFromR*(info: ptr DllInfo) {.exportc: "R_init_tNimFromR", cdecl, dynlib.} =
-  updateStackBottom()
-  echo "now"
-  echo callMethods[0].unsafeAddr.isNil
-  R_RegisterRoutines(info, nil, callMethods[0].unsafeAddr, nil, nil)
-  echo ":("
-
-proc R_unload_tNimFromR*(info: ptr DllInfo) {.exportc: "R_unload_tNimFromR", cdecl, dynlib.} =
-  # what to do?
-  discard
-
-]#
 ```
 
 
